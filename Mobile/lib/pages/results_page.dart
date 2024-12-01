@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ResultsPage extends StatelessWidget {
+  const ResultsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    // Data prediksi laptop yang akan ditampilkan
     final List<Map<String, String>> laptops = [
       {
         'name': 'Laptop A',
@@ -21,7 +22,7 @@ class ResultsPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Hasil Prediksi'),
+        title: const Text('Hasil Prediksi'),
       ),
       body: ListView.builder(
         itemCount: laptops.length,
@@ -31,17 +32,17 @@ class ResultsPage extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
-            margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: ListTile(
-              contentPadding: EdgeInsets.all(16),
-              leading: Icon(
+              contentPadding: const EdgeInsets.all(16),
+              leading: const Icon(
                 Icons.laptop,
                 size: 40,
                 color: Colors.blueAccent,
               ),
               title: Text(
                 laptops[index]['name']!,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(laptops[index]['specs']!),
               onTap: () {

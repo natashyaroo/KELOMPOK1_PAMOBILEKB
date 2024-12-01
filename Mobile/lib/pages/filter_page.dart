@@ -3,12 +3,13 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class FilterPage extends StatefulWidget {
+  const FilterPage({super.key});
+
   @override
   _FilterPageState createState() => _FilterPageState();
 }
 
 class _FilterPageState extends State<FilterPage> {
-
   String selectedRAM = '8';
   String selectedStorage = '512';
   String selectedVGATier = '2';
@@ -24,8 +25,7 @@ class _FilterPageState extends State<FilterPage> {
   Future<void> predictLaptopClass() async {
     if (priceController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Silakan masukkan harga laptop'))
-      );
+          const SnackBar(content: Text('Silakan masukkan harga laptop')));
       return;
     }
 
@@ -41,7 +41,7 @@ class _FilterPageState extends State<FilterPage> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://your-api-endpoint/predict'),
+        Uri.parse('http://10.0.2.2:5000/predict'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -49,49 +49,38 @@ class _FilterPageState extends State<FilterPage> {
       );
 
       if (response.statusCode == 200) {
-
         var result = json.decode(response.body);
-        
 
-        Navigator.pushNamed(
-          context, 
-          '/results', 
-          arguments: {
-            'prediction': result['prediction']['class'],
-            'confidence': result['prediction']['confidence']
-          }
-        );
+        Navigator.pushNamed(context, '/results', arguments: {
+          'prediction': result['prediction']['class'],
+          'confidence': result['prediction']['confidence']
+        });
       } else {
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Gagal melakukan prediksi: ${response.body}'))
-        );
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Gagal melakukan prediksi: ${response.body}')));
       }
     } catch (e) {
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e'))
-      );
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Filter Laptop')),
+      appBar: AppBar(title: const Text('Filter Laptop')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-
             Card(
               elevation: 4,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
-                title: Text('Pilih RAM (GB)'),
+                title: const Text('Pilih RAM (GB)'),
                 trailing: DropdownButton<String>(
                   value: selectedRAM,
                   items: ramOptions.map((ram) {
@@ -108,14 +97,14 @@ class _FilterPageState extends State<FilterPage> {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Card(
               elevation: 4,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
-                title: Text('Pilih Penyimpanan (GB)'),
+                title: const Text('Pilih Penyimpanan (GB)'),
                 trailing: DropdownButton<String>(
                   value: selectedStorage,
                   items: storageOptions.map((storage) {
@@ -132,20 +121,20 @@ class _FilterPageState extends State<FilterPage> {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Card(
               elevation: 4,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
-                title: Text('Harga Laptop'),
+                title: const Text('Harga Laptop'),
                 trailing: SizedBox(
                   width: 100,
                   child: TextField(
                     controller: priceController,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Rp',
                       border: OutlineInputBorder(),
                     ),
@@ -153,14 +142,14 @@ class _FilterPageState extends State<FilterPage> {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Card(
               elevation: 4,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
-                title: Text('Tier VGA'),
+                title: const Text('Tier VGA'),
                 trailing: DropdownButton<String>(
                   value: selectedVGATier,
                   items: vgaTierOptions.map((tier) {
@@ -177,15 +166,14 @@ class _FilterPageState extends State<FilterPage> {
                 ),
               ),
             ),
-            SizedBox(height: 16),
-
+            const SizedBox(height: 16),
             Card(
               elevation: 4,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
-                title: Text('Tier Processor'),
+                title: const Text('Tier Processor'),
                 trailing: DropdownButton<String>(
                   value: selectedProcessorTier,
                   items: processorTierOptions.map((tier) {
@@ -202,17 +190,16 @@ class _FilterPageState extends State<FilterPage> {
                 ),
               ),
             ),
-            SizedBox(height: 32),
-
+            const SizedBox(height: 32),
             ElevatedButton(
               onPressed: predictLaptopClass,
-              child: Text('Lihat Hasil Prediksi'),
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 16),
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
+              child: const Text('Lihat Hasil Prediksi'),
             ),
           ],
         ),

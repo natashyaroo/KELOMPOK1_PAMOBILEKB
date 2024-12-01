@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class AboutPage extends StatelessWidget {
+  const AboutPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tentang Aplikasi'),
+        title: const Text('Tentang Aplikasi'),
         backgroundColor: Colors.purpleAccent,
       ),
       body: Padding(
@@ -13,7 +15,7 @@ class AboutPage extends StatelessWidget {
         child: ListView(
           children: [
             // Judul dan deskripsi aplikasi
-            Text(
+            const Text(
               'Aplikasi Prediksi Laptop',
               style: TextStyle(
                 fontSize: 24,
@@ -22,13 +24,13 @@ class AboutPage extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Aplikasi ini membantu Anda untuk memilih laptop terbaik sesuai dengan kebutuhan Anda berdasarkan spesifikasi yang Anda pilih, seperti RAM, prosesor, dan fitur lainnya.',
               style: TextStyle(fontSize: 16, color: Colors.black54),
               textAlign: TextAlign.justify,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Bagian Logo Aplikasi (Jika ada gambar logo)
             Center(
@@ -38,32 +40,32 @@ class AboutPage extends StatelessWidget {
                 width: 150,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Bagian Tentang Developer
-            Text(
+            const Text(
               'Dikembangkan oleh:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
-            Text(
+            const SizedBox(height: 10),
+            const Text(
               'Developer: Kelompok 1\n'
               'Kontak: 0818181818\n'
               'Versi Aplikasi: New Update',
               style: TextStyle(fontSize: 16, color: Colors.black54),
               textAlign: TextAlign.left,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Tombol kembali ke halaman utama
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context); // Kembali ke halaman sebelumnya
               },
-              child: Text('Kembali ke Halaman Utama'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.purpleAccent,
               ),
+              child: const Text('Kembali ke Halaman Utama'),
             ),
           ],
         ),

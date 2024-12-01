@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Prediksi Laptop'),
+        title: const Text('Prediksi Laptop'),
         actions: [
           IconButton(
-            icon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings),
             onPressed: () {
               Navigator.pushNamed(context, '/settings');
             },
@@ -25,7 +27,7 @@ class HomePage extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall,
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Card for laptop category or filter options
             Card(
@@ -34,24 +36,24 @@ class HomePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
-                contentPadding: EdgeInsets.all(16),
-                leading: Icon(
+                contentPadding: const EdgeInsets.all(16),
+                leading: const Icon(
                   Icons.laptop,
                   size: 40,
                   color: Colors.blueAccent,
                 ),
-                title: Text(
+                title: const Text(
                   'Cari Laptop Sesuai Kebutuhan',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                subtitle: Text(
+                subtitle: const Text(
                     'Temukan laptop terbaik berdasarkan kategori yang Anda butuhkan'),
                 onTap: () {
                   Navigator.pushNamed(context, '/filter');
                 },
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Card for predictions
             Card(
@@ -60,24 +62,24 @@ class HomePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
-                contentPadding: EdgeInsets.all(16),
-                leading: Icon(
+                contentPadding: const EdgeInsets.all(16),
+                leading: const Icon(
                   Icons.search,
                   size: 40,
                   color: Colors.greenAccent,
                 ),
-                title: Text(
+                title: const Text(
                   'Prediksi Laptop',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                subtitle: Text(
+                subtitle: const Text(
                     'Dapatkan prediksi laptop yang sesuai dengan spesifikasi Anda'),
                 onTap: () {
                   Navigator.pushNamed(context, '/results');
                 },
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Card for settings
             Card(
@@ -86,23 +88,23 @@ class HomePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
-                contentPadding: EdgeInsets.all(16),
-                leading: Icon(
+                contentPadding: const EdgeInsets.all(16),
+                leading: const Icon(
                   Icons.settings,
                   size: 40,
                   color: Colors.orangeAccent,
                 ),
-                title: Text(
+                title: const Text(
                   'Pengaturan Tema',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                subtitle: Text('Ubah tema aplikasi sesuai preferensi Anda'),
+                subtitle: const Text('Ubah tema aplikasi sesuai preferensi Anda'),
                 onTap: () {
                   Navigator.pushNamed(context, '/settings');
                 },
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Card for About page
             Card(
@@ -111,23 +113,23 @@ class HomePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
-                contentPadding: EdgeInsets.all(16),
-                leading: Icon(
+                contentPadding: const EdgeInsets.all(16),
+                leading: const Icon(
                   Icons.info,
                   size: 40,
                   color: Colors.purpleAccent,
                 ),
-                title: Text(
+                title: const Text(
                   'Tentang Aplikasi',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                subtitle: Text('Pelajari lebih lanjut tentang aplikasi ini'),
+                subtitle: const Text('Pelajari lebih lanjut tentang aplikasi ini'),
                 onTap: () {
                   Navigator.pushNamed(context, '/about');
                 },
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),

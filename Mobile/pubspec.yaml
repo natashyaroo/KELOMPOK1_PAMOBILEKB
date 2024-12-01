@@ -12,6 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^6.1.2
+  http: ^0.13.5 
+  flutter_lints: ^2.0.0
 
 dev_dependencies:
   flutter_test:

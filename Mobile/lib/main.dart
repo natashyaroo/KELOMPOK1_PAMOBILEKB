@@ -9,10 +9,12 @@ import 'pages/about_page.dart'; // Import AboutPage
 import 'pages/details_page.dart'; // Import DetailsPage
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -28,12 +30,12 @@ class MyApp extends StatelessWidget {
             darkTheme: ThemeData.dark(),
             initialRoute: '/',
             routes: {
-              '/': (context) => HomePage(),
-              '/filter': (context) => FilterPage(),
-              '/results': (context) => ResultsPage(),
-              '/settings': (context) => SettingsPage(),
-              '/about': (context) => AboutPage(), // AboutPage route
-              '/details': (context) => DetailsPage(), // DetailsPage route
+              '/': (context) => const HomePage(),
+              '/filter': (context) => const FilterPage(),
+              '/results': (context) => const ResultsPage(),
+              '/settings': (context) => const SettingsPage(),
+              '/about': (context) => const AboutPage(), // AboutPage route
+              '/details': (context) => const DetailsPage(), // DetailsPage route
             },
           );
         },
