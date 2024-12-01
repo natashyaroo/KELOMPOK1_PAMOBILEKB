@@ -19,8 +19,8 @@ class _FilterPageState extends State<FilterPage> {
 
   final List<String> ramOptions = ['4', '8', '16', '32'];
   final List<String> storageOptions = ['256', '512', '1024', '2048'];
-  final List<String> vgaTierOptions = ['1', '2', '3', 'Unknown'];
-  final List<String> processorTierOptions = ['1', '2', '3', '4', 'Unknown'];
+  final List<String> vgaTierOptions = ['1', '2', '3'];
+  final List<String> processorTierOptions = ['1', '2', '3', '4'];
 
   Future<void> predictLaptopClass() async {
     if (priceController.text.isEmpty) {
@@ -41,7 +41,7 @@ class _FilterPageState extends State<FilterPage> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:5000/predict'),
+        Uri.parse('http://127.0.0.1:8000/predict'),
         headers: {
           'Content-Type': 'application/json',
         },
