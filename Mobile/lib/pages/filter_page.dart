@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class FilterPage extends StatefulWidget {
   @override
@@ -6,31 +8,96 @@ class FilterPage extends StatefulWidget {
 }
 
 class _FilterPageState extends State<FilterPage> {
-  String selectedRAM = '8GB';
-  String selectedProcessor = 'Intel i5';
+
+  String selectedRAM = '8';
+  String selectedStorage = '512';
+  String selectedVGATier = '2';
+  String selectedProcessorTier = '2';
+
+  TextEditingController priceController = TextEditingController();
+
+  final List<String> ramOptions = ['4', '8', '16', '32'];
+  final List<String> storageOptions = ['256', '512', '1024', '2048'];
+  final List<String> vgaTierOptions = ['1', '2', '3', 'Unknown'];
+  final List<String> processorTierOptions = ['1', '2', '3', '4', 'Unknown'];
+
+  Future<void> predictLaptopClass() async {
+    if (priceController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Silakan masukkan harga laptop'))
+      );
+      return;
+    }
+
+    Map<String, dynamic> requestData = {
+      'data': {
+        'Penyimpanan': int.parse(selectedStorage),
+        'RAM_Numeric': int.parse(selectedRAM),
+        'Harga': int.parse(priceController.text),
+        'Tier VGA': selectedVGATier,
+        'Tier Processor': selectedProcessorTier
+      }
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse('http://your-api-endpoint/predict'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(requestData),
+      );
+
+      if (response.statusCode == 200) {
+
+        var result = json.decode(response.body);
+        
+
+        Navigator.pushNamed(
+          context, 
+          '/results', 
+          arguments: {
+            'prediction': result['prediction']['class'],
+            'confidence': result['prediction']['confidence']
+          }
+        );
+      } else {
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Gagal melakukan prediksi: ${response.body}'))
+        );
+      }
+    } catch (e) {
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $e'))
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Filter Laptop')),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+
             Card(
               elevation: 4,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
-                contentPadding: EdgeInsets.all(16),
-                title: Text('Pilih RAM'),
+                title: Text('Pilih RAM (GB)'),
                 trailing: DropdownButton<String>(
                   value: selectedRAM,
-                  items: ['4GB', '8GB', '16GB'].map((ram) {
+                  items: ramOptions.map((ram) {
                     return DropdownMenuItem(
                       value: ram,
-                      child: Text(ram),
+                      child: Text('$ram GB'),
                     );
                   }).toList(),
                   onChanged: (value) {
@@ -41,37 +108,111 @@ class _FilterPageState extends State<FilterPage> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 16),
             Card(
               elevation: 4,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
-                contentPadding: EdgeInsets.all(16),
-                title: Text('Pilih Prosesor'),
+                title: Text('Pilih Penyimpanan (GB)'),
                 trailing: DropdownButton<String>(
-                  value: selectedProcessor,
-                  items: ['Intel i3', 'Intel i5', 'Intel i7'].map((processor) {
+                  value: selectedStorage,
+                  items: storageOptions.map((storage) {
                     return DropdownMenuItem(
-                      value: processor,
-                      child: Text(processor),
+                      value: storage,
+                      child: Text('$storage GB'),
                     );
                   }).toList(),
                   onChanged: (value) {
                     setState(() {
-                      selectedProcessor = value!;
+                      selectedStorage = value!;
                     });
                   },
                 ),
               ),
             ),
-            SizedBox(height: 40),
+            SizedBox(height: 16),
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListTile(
+                title: Text('Harga Laptop'),
+                trailing: SizedBox(
+                  width: 100,
+                  child: TextField(
+                    controller: priceController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: 'Rp',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 16),
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListTile(
+                title: Text('Tier VGA'),
+                trailing: DropdownButton<String>(
+                  value: selectedVGATier,
+                  items: vgaTierOptions.map((tier) {
+                    return DropdownMenuItem(
+                      value: tier,
+                      child: Text('Tier $tier'),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedVGATier = value!;
+                    });
+                  },
+                ),
+              ),
+            ),
+            SizedBox(height: 16),
+
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListTile(
+                title: Text('Tier Processor'),
+                trailing: DropdownButton<String>(
+                  value: selectedProcessorTier,
+                  items: processorTierOptions.map((tier) {
+                    return DropdownMenuItem(
+                      value: tier,
+                      child: Text('Tier $tier'),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedProcessorTier = value!;
+                    });
+                  },
+                ),
+              ),
+            ),
+            SizedBox(height: 32),
+
             ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/');
-              },
-              child: Text('Lihat Hasil'),
+              onPressed: predictLaptopClass,
+              child: Text('Lihat Hasil Prediksi'),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
             ),
           ],
         ),
